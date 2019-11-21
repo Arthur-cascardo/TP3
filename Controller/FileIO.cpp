@@ -164,7 +164,7 @@ void FileIO::salvarListaContas(string s, vector<Conta> c){
 void FileIO::salvarListaMove(string s, vector<Move> m){
 
     ofstream ofile;
-    ofile.open(s,ios::app);
+    ofile.open(s);
     for(auto x : m){
 
         ofile << x.getData().getDia()
