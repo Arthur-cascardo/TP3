@@ -96,7 +96,7 @@ vector<Move> Conta::obterExtratoEntreDatas(Data di, Data df){
     this->movimentacoes = a.preencheVectorMove(aux_file);
     for(Move m : this->movimentacoes){
         d = m.getData();
-        if(di > d && df > d){
+        if(di >= d && df >= d){
             aux.push_back(m);
         }
     }
@@ -119,7 +119,7 @@ vector<Move> Conta::obterExtratoaPartirDeData(Data di){
 
     for(Move m : this->movimentacoes){
         d = m.getData();
-        if(di > d && df > d){
+        if(di >= d && df >= d){
             aux.push_back(m);
         }
     }
