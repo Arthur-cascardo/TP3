@@ -103,8 +103,22 @@ vector<Cliente> FileIO::preencheVectorCliente(string s){
 
     return this->clientes;
 }
+//TODO: IMPLEMENTAR METODOS CORRETAMENTE PARA OS DOIS TIPOS DE CONTA
+vector<Conta> FileIO::preencheVectorPoupanca(string s){
 
-vector<Conta> FileIO::preencheVectorConta(string s){
+    vector<string> aux;
+    int i;
+
+    aux = this->lerListaContas(s);
+    for(i = 0; i < aux.size()/3; i++){
+
+        Conta aux_conta(stoi(aux[i*3]), stod(aux[i*3 + 1]), aux[i*3 + 2]);
+        this->contas.push_back(aux_conta);
+    }
+    return this->contas;
+}
+
+vector<Conta> FileIO::preencheVectorCorrente(string s){
 
     vector<string> aux;
     int i;

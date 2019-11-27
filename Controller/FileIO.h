@@ -27,7 +27,8 @@ public:
     vector<string> lerListaContas(string s);
     vector<string> lerListaMove(string s);
     vector<Cliente> preencheVectorCliente(string s);
-    vector<Conta> preencheVectorConta(string s);
+    vector<Conta> preencheVectorPoupanca(string s);
+    vector<Conta> preencheVectorCorrente(string s);
     vector<Move> preencheVectorMove(string s);
     void preencheMap();
     void salvarListaClientes(string s, vector<Cliente> c);
@@ -46,6 +47,8 @@ private:
     vector<Conta> contas;
     vector<Move> move;
     map<string,Conta> listaClienteConta;
+
+
 };
 
 

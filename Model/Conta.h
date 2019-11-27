@@ -33,23 +33,24 @@ class Conta {
 
         //Metodos
 
-        int gerarNumConta();
-        void debitarConta(double debito, string descricao);
-        void creditarConta(double credito, string descricao);
-        vector<Move> obterExtratoEntreDatas(Data di, Data df);
-        vector<Move> obterExtratoaPartirDeData(Data di);
-        vector<Move> obterExtratoMes();
+        virtual int gerarNumConta();
+        virtual void debitarConta(double debito, string descricao);
+        virtual void creditarConta(double credito, string descricao);
+        virtual vector<Move> obterExtratoEntreDatas(Data di, Data df);
+        virtual vector<Move> obterExtratoaPartirDeData(Data di);
+        virtual vector<Move> obterExtratoMes();
 
         //Setters
 
-        void setCliente(Cliente c);
+        virtual void setCliente(Cliente c);
 
     private:
 
         int numConta;
-        double saldo;
-        Cliente cliente;
-        vector<Move> movimentacoes;
+protected:
+    Cliente cliente;
+    vector<Move> movimentacoes;
+    double saldo;
 };
 
 

@@ -220,8 +220,25 @@ void Banco::setClientList(){
     this->clientes = a.preencheVectorCliente(aux);
 
 }
+//TODO: IMPLEMENTAR METODOS CORRETAMENTE PARA OS DOIS TIPOS DE CONTA
+void Banco::setCorrenteList(){
 
-void Banco::setContaList(){
+    FileIO a;
+    string aux;
+    int count = 0;
+
+    aux = "./Bancos/" + this->nomeBanco + "/Contas " + this->nomeBanco + ".txt";
+    this->contas = a.preencheVectorConta(aux);
+    for(auto x : this->contas){
+        for(auto y : this->clientes){
+            if(this->contas[count].getCliente().getCPF_CNPJ() == y.getCPF_CNPJ()) {
+                this->contas[count].setCliente(y);
+            }
+        }
+    }
+}
+
+void Banco::setPoupancaList(){
 
     FileIO a;
     string aux;

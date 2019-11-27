@@ -5,32 +5,6 @@
 #include "Conta.h"
 #include "../Controller/FileIO.h"
 
-
-//Construtor
-
-Conta::Conta(){
-
-    this->numConta = 0;
-    this->saldo = 0;
-    this->cliente = Cliente();
-
-}
-
-Conta::Conta(Cliente c){
-
-    FileIO a;
-    string aux;
-    static int i = 0;
-
-    this->numConta = i++;
-    this->saldo = 0;
-    this->cliente = c;
-
-    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
-    a.criarArquivo(aux);
-    this->movimentacoes = a.preencheVectorMove(aux);
-}
-
 //Contrutor auxiliar
 
 Conta::Conta(int numConta, double saldo, string cpf_cnpj){
@@ -54,35 +28,35 @@ void Conta::setCliente(Cliente c){this->cliente = c;}
 
 //Metodos
 
-void Conta::debitarConta(double debito, string descricao){
-
-    Data d;
-    FileIO a;
-    string aux;
-    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
-
-    if(debito > this->saldo){return;}
-
-    d.getDataSistema();
-    Move m(d, descricao, 'D', debito);
-    this->movimentacoes.push_back(m);
-    this->saldo -= debito;
-    a.salvarListaMove(aux,this->movimentacoes);
-}
-
-void Conta::creditarConta(double credito, string descricao){
-
-    Data d;
-    FileIO a;
-    string aux;
-    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
-
-    d.getDataSistema();
-    Move m(d, descricao, 'C', credito);
-    this->movimentacoes.push_back(m);
-    this->saldo += credito;
-    a.salvarListaMove(aux,this->movimentacoes);
-}
+//void Conta::debitarConta(double debito, string descricao){
+//
+//    Data d;
+//    FileIO a;
+//    string aux;
+//    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
+//
+//    if(debito > this->saldo){return;}
+//
+//    d.getDataSistema();
+//    Move m(d, descricao, 'D', debito);
+//    this->movimentacoes.push_back(m);
+//    this->saldo -= debito;
+//    a.salvarListaMove(aux,this->movimentacoes);
+//}
+//
+//void Conta::creditarConta(double credito, string descricao){
+//
+//    Data d;
+//    FileIO a;
+//    string aux;
+//    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
+//
+//    d.getDataSistema();
+//    Move m(d, descricao, 'C', credito);
+//    this->movimentacoes.push_back(m);
+//    this->saldo += credito;
+//    a.salvarListaMove(aux,this->movimentacoes);
+//}
 
 vector<Move> Conta::obterExtratoEntreDatas(Data di, Data df){
 
