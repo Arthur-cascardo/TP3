@@ -11,6 +11,8 @@
 #include "../Model/Banco.h"
 #include "../Model/Cliente.h"
 #include "../Model/Conta.h"
+#include "../Model/ContaCorrente.h"
+#include "../Model/Poupanca.h"
 #include "../Controller/FileIO.h"
 
 

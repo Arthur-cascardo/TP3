@@ -4,6 +4,9 @@
 
 #include "Conta.h"
 #include "../Controller/FileIO.h"
+#include <ctime>
+#include <cstdlib>
+#include <iostream>
 
 
 //Construtor
@@ -20,9 +23,8 @@ Conta::Conta(Cliente c){
 
     FileIO a;
     string aux;
-    static int i = 0;
 
-    this->numConta = i++;
+    this->numConta = gerarNumConta();
     this->saldo = 0;
     this->cliente = c;
 
@@ -61,13 +63,25 @@ void Conta::debitarConta(double debito, string descricao){
     string aux;
     aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
 
-    if(debito > this->saldo){return;}
+    if(debito > this->saldo){
+        throw string ("Saldo Insuficiente");
+    } else{
 
-    d.getDataSistema();
-    Move m(d, descricao, 'D', debito);
-    this->movimentacoes.push_back(m);
-    this->saldo -= debito;
-    a.salvarListaMove(aux,this->movimentacoes);
+        d.getDataSistema();
+        Move m(d, descricao, 'D', debito);
+        this->movimentacoes.push_back(m);
+        this->saldo -= debito;
+        a.salvarListaMove(aux,this->movimentacoes);
+    }
+
+
+}
+int Conta::gerarNumConta() {
+    srand((unsigned)time(0));
+    int maior = 1000;
+    int menor = 9999;
+    int aleatorio = rand()%(maior-menor+1) + menor;
+    return aleatorio;
 }
 
 void Conta::creditarConta(double credito, string descricao){
@@ -83,6 +97,7 @@ void Conta::creditarConta(double credito, string descricao){
     this->saldo += credito;
     a.salvarListaMove(aux,this->movimentacoes);
 }
+
 
 vector<Move> Conta::obterExtratoEntreDatas(Data di, Data df){
 

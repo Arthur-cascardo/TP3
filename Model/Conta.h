@@ -33,7 +33,7 @@ class Conta {
 
         //Metodos
 
-        //int gerarNumConta();
+        int gerarNumConta();
         void debitarConta(double debito, string descricao);
         void creditarConta(double credito, string descricao);
         vector<Move> obterExtratoEntreDatas(Data di, Data df);
@@ -42,9 +42,7 @@ class Conta {
 
         //Setters
 
-        void setCliente(Cliente c);
-
-    private:
+        virtual void setCliente(Cliente c);
 
         int numConta;
         double saldo;

@@ -3,6 +3,7 @@
 //
 
 #include "FileIO.h"
+#include "../Model/ContaCorrente.h"
 
 vector<string> FileIO::lerListaClientes(string s){
 
@@ -112,8 +113,10 @@ vector<Conta> FileIO::preencheVectorConta(string s){
     aux = this->lerListaContas(s);
     for(i = 0; i < aux.size()/3; i++){
 
-        Conta aux_conta(stoi(aux[i*3]), stod(aux[i*3 + 1]), aux[i*3 + 2]);
-        this->contas.push_back(aux_conta);
+        ContaCorrente aux_conta(stoi(aux[i*3]), stod(aux[i*3 + 1]), aux[i*3 + 2],45.9);
+
+
+        //this->contas.push_back(aux_conta);
     }
     return this->contas;
 }
@@ -148,7 +151,7 @@ void FileIO::salvarListaClientes(string s, vector<Cliente> c){
     }
 }
 
-void FileIO::salvarListaContas(string s, vector<Conta> c){
+void FileIO::salvarListaContas(string s, vector<ContaCorrente> c){
 
     ofstream ofile;
 
@@ -183,7 +186,7 @@ vector<Cliente> FileIO::getClientes(){
 
 }
 
-vector<Conta> FileIO::getConta(){
+vector<ContaCorrente> FileIO::getConta(){
 
     return this->contas;
 

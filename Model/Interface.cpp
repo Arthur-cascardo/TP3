@@ -13,7 +13,7 @@ void Interface::menu(Banco b){
     while(1){
 
         b.setClientList();
-        b.setContaList();
+        //b.setContaList();
         cout << "\t\t\t  Bem Vindo ao Banco " << b.getnomeBanco() << "!\n\n";
         cout << ("\nEscolha uma Funcao\n\n");
         cout << ("  [1] - Cadastrar um novo cliente\n");
@@ -28,6 +28,7 @@ void Interface::menu(Banco b){
         cout << ("  [10] - Obter extrato\n");
         cout << ("  [11] - Listar clientes\n");
         cout << ("  [12] - Listar contas\n");
+        cout << ("  [13] - Exclui Cliente\n");
         cout << ("  [0] - Sair do programa\n");
         cout << ("\n\n");
 
@@ -82,6 +83,9 @@ void Interface::menu(Banco b){
             case 12:
                 listarContas(b);
                 break;
+            case 13:
+                excluiCliente(b);
+                break;
 
             default:
                 system("cls");
@@ -103,7 +107,11 @@ void Interface::cadastraNovoCliente(Banco b){
     cout << "Digite o CPF ou o CNPJ: ";
     cin >> aux;
     cin.ignore();
-    novoCliente.setCPF_CNPJ(aux);
+    try {
+        novoCliente.setCPF_CNPJ(aux);
+    } catch (const string& erro){
+        cout << erro << endl;
+    }
     aux.clear();
     cout << "Digite o endereço: ";
     getline(cin,aux);
@@ -112,7 +120,14 @@ void Interface::cadastraNovoCliente(Banco b){
     cout << "Digite o telefone: ";
     cin >> aux;
     cin.ignore();
-    novoCliente.setFone(aux);
+    try{
+        novoCliente.setFone(aux);
+    }
+    catch(const string& msg){
+        cout << msg << endl;
+    }
+
+
     aux.clear();
 
     b.addCliente(novoCliente);
@@ -127,9 +142,13 @@ void Interface::criarNovaConta(Banco b){
     string CPF;
     vector<Cliente> clientes;
     int i = 1;
+    ContaCorrente a(234.5);
+    cout << a.numConta;
+
 
     clientes = b.getClientList();
     cout << "Selecione Um cliente da lista: " << endl;
+
 
     for(auto x : clientes){
 
@@ -142,30 +161,55 @@ void Interface::criarNovaConta(Banco b){
     cin >> i;
     cin.ignore();
 
-    b.addConta(clientes[i - 1]);
+    cout << "Deseja criar que tipo de conta? " << endl;
+
+    cout << "  [1] - Conta Corrente \n" << endl;
+    cout << "  [2] - Conta Poupança \n" << endl;
+
+    int opc;
+    cin >> opc;
+
+    switch(opc){
+        case(1):
+            cout << "qual o limite de credito desejado? " << endl;
+            double limite;
+            cin >> limite;
+            b.addConta(clientes[i-1], 'c', limite);
+        case(2):
+            b.addConta(clientes[i - 1], 'd');
+    }
+
+
+
+
 
     cout << "Conta criada com sucesso!" << endl;
     cout << "Bem Vindo(a) ao banco " << b.getnomeBanco() << " " << clientes[i - 1].getNome() << "!!!" << endl;
 
 }
 
-void Interface::excluiCliente(Banco b){
+void Interface::excluiCliente(Banco b) {
 
     string CPF, s;
     vector<Conta> contas;
 
-    cout << "Digite o CPF do cliente a ser excluido: " ;
+    cout << "Digite o CPF do cliente a ser excluido: ";
     cin >> CPF;
     cin.ignore();
 
-    for(auto x : contas){
-        if(x.getCliente().getCPF_CNPJ() == CPF){
+    for (auto x : contas) {
+        if (x.getCliente().getCPF_CNPJ() == CPF) {
             s = x.getCliente().getNome();
         }
     }
 
     cout << "O cliente escolhido foi: " << s << endl;
+    try{
     b.removeCliente(CPF);
+}
+    catch(const string& msg){
+        cout << msg << endl;
+    }
 
 }
 
@@ -210,9 +254,17 @@ void Interface::saque(Banco b){
     cin.ignore();
     cout << "Escolha o valor de saque: ";
     cin >> valSaque ;
-    cin.ignore();
-    cout << "Saque de " << valSaque << " reais, da conta: " << numConta << endl;
-    b.saque(numConta, valSaque);
+
+
+    try{
+        b.saque(numConta, valSaque);
+        cin.ignore();
+        cout << "Saque de " << valSaque << " reais, da conta: " << numConta << endl;
+    }
+    catch (const string& erro){
+        cout << erro << endl;
+    }
+
     b.salvar();
 
 }
