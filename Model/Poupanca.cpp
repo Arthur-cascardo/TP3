@@ -1,4 +1,5 @@
 //
+<<<<<<< HEAD
 // Created by Arthur on 24/11/2019.
 //
 
@@ -74,3 +75,16 @@ list<double> Poupanca::pegaSaldoDiaMaisProx(Data d){
     return aux;
 }
 
+=======
+// Created by Bia Amorzinho on 28/11/2019.
+//
+
+#include "Poupanca.h"
+
+Poupanca::Poupanca() {
+    this->numConta = numConta;
+    this->saldo = 0;
+
+
+}
+>>>>>>> remotes/origin/Bia

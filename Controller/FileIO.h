@@ -16,6 +16,7 @@
 #include "../Model/Cliente.h"
 #include "../Model/Conta.h"
 #include "../Model/Move.h"
+#include "../Model/ContaCorrente.h"
 
 using namespace std;
 
@@ -32,23 +33,27 @@ public:
     vector<Move> preencheVectorMove(string s);
     void preencheMap();
     void salvarListaClientes(string s, vector<Cliente> c);
-    void salvarListaContas(string s, vector<Conta> c);
+    void salvarListaContas(string s, vector<ContaCorrente> c);
     void salvarListaMove(string s, vector<Move> m);
     void criarArquivo(string s);
     //temp
     vector<Cliente> getClientes();
-    vector<Conta> getConta();
+    vector<ContaCorrente> getConta();
     map<string,Conta> getMap();
 
 
 private:
 
     vector<Cliente> clientes;
-    vector<Conta> contas;
+    vector<ContaCorrente> contas;
     vector<Move> move;
+<<<<<<< HEAD
     map<string,Conta> listaClienteConta;
 
 
+=======
+    map<string,ContaCorrente> listaClienteConta;
+>>>>>>> remotes/origin/Bia
 };
 
 

@@ -11,6 +11,8 @@
 #include "Cliente.h"
 #include "Conta.h"
 #include "../Controller/FileIO.h"
+#include "ContaCorrente.h"
+#include "Poupanca.h"
 
 class Banco {
 
@@ -19,13 +21,15 @@ private:
     string nomeBanco;
     vector<Cliente> clientes;
     vector<Conta> contas;
+    vector<ContaCorrente> contaCorrente;
+    vector<Poupanca> poupanca;
     vector<Move> movimentacoes;
 
 public:
 
     Banco(string newBanco);
     void addCliente(Cliente newClient);
-    void addConta(Cliente newConta);
+    void addConta(Cliente newConta, char tipoDeConta, double limiteCredito = 0.0);
     void removeCliente(string cpf);
     void removeConta(int numConta);
     double getSaldo(int numConta);
@@ -44,11 +48,13 @@ public:
     string getnomeBanco();
     vector<Cliente> getClientList();
     vector<Conta> getContasList();
+    vector<ContaCorrente> getContaCorrenteList();
+    vector<Poupanca> getPoupancaList();
 
     //Setters
 
     void setClientList();
-    void setContaList();
+    void setContaList(char tipoDeConta);
 
     ~Banco();
 };

@@ -41,7 +41,19 @@ void Cliente::setNome(string novonome)
 
 void Cliente::setCPF_CNPJ(string novocpf)
 {
-    cpf_cnpj = novocpf;
+    bool v = false;
+    for(int c=0; c<novocpf.length(); c++){
+        if (!isdigit(novocpf[c])){
+            v = true;
+            break;
+        }
+    }
+    if(novocpf.length() != 11 || v){
+        throw string("Formato inválido, digite apenas 11 digitos");
+    } else {
+        cpf_cnpj = novocpf;
+    }
+
 }
 
 void Cliente::setEndereco(string novoendereco)
@@ -51,7 +63,18 @@ void Cliente::setEndereco(string novoendereco)
 
 void Cliente::setFone(string novofone)
 {
-    fone = novofone;
+    bool v = false;
+    for(int c=0; c<novofone.length(); c++){
+        if (!isdigit(novofone[c])){
+            v = true;
+            break;
+        }
+    }
+    if((novofone.length() != 8 || novofone.length() != 9)|| v){
+        throw string("Formato inválido, digite apenas 8 digitos");
+    } else {
+        fone = novofone;
+    }
 }
 string Cliente::getNome()
 {

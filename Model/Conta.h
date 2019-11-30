@@ -43,8 +43,11 @@ class Conta {
         //Setters
 
         virtual void setCliente(Cliente c);
+<<<<<<< HEAD
 
     private:
+=======
+>>>>>>> remotes/origin/Bia
 
         int numConta;
 protected:

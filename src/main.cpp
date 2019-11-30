@@ -1,4 +1,5 @@
 #include <iostream>
+<<<<<<< HEAD
 #include "../Model/Banco.h"
 
 int main() {
@@ -13,4 +14,19 @@ int main() {
     for(auto x : conta.obterExtratoMes()){
         int i = 0;
     }
+=======
+#include "../Model/Cliente.h"
+#include "../Model/Conta.h"
+#include "../Model/Banco.h"
+#include "../Model/Interface.h"
+
+int main() {
+    setlocale( LC_ALL, "Portuguese" );
+    Conta c;
+    Banco b("Inter");
+    Interface i;
+
+    i.menu(b);
+
+>>>>>>> remotes/origin/Bia
 }

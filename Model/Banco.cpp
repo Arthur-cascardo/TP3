@@ -3,6 +3,8 @@
 //
 
 #include "Banco.h"
+#include "ContaCorrente.h"
+#include "Poupanca.h"
 
 Banco::Banco(string newBanco)
 {
@@ -22,18 +24,33 @@ void Banco::addCliente(Cliente newCliente) {
 
 }
 
-void Banco::addConta(Cliente newConta) {
-
-    Conta c(newConta);
+void Banco::addConta(Cliente newConta, char tipoDeConta, double limiteCredito) {
     FileIO a;
-    string aux;
+    if (tipoDeConta == 'c'){
+        ContaCorrente c(limiteCredito);
+        string aux;
+        aux = "./Bancos/Inter/ContaCorrente " + this->nomeBanco + ".txt";
+        this->setClientList();
+        this->setContaList(tipoDeConta);
+        this->contaCorrente.push_back(c);
+        a.salvarListaContas(aux,this->contaCorrente);
 
-    aux = "./Bancos/Inter/Contas " + this->nomeBanco + ".txt";
+    } else {
+        Poupanca p();
+        string aux;
+        aux = "./Bancos/Inter/Poupanca " + this->nomeBanco + ".txt";
+        this->setClientList();
+        this->setContaList(tipoDeConta);
+        //this->poupanca.push_back(p);
+        //a.salvarListaContas(aux,this->poupanca);
+    }
 
-    this->setClientList();
-    this->setContaList();
-    this->contas.push_back(c);
-    a.salvarListaContas(aux,this->contas);
+
+
+
+
+
+
 }
 
 void Banco::removeCliente(string cpf) {
@@ -42,13 +59,14 @@ void Banco::removeCliente(string cpf) {
         if (it->getCPF_CNPJ() == cpf) {
             for (auto y : this->contas) {
                 if (y.getCliente().getCPF_CNPJ() == cpf) {
-                    cout << "Este cliente nÃ£o pode ser removido pois possui uma Conta" << endl;
-                    return;
+                    throw string ("Este cliente não pode ser removido pois possui uma Conta \n");
+
                 }
             }
+            this->clientes.erase(it);
         }
-        this->clientes.erase(it);
-        return;
+
+
     }
 }
 
@@ -76,6 +94,16 @@ vector<Cliente> Banco::getClientList() {
 vector<Conta> Banco::getContasList() {
 
     return this->contas;
+
+}
+vector<ContaCorrente> Banco::getContaCorrenteList() {
+
+    return this->contaCorrente;
+
+}
+vector<Poupanca> Banco::getPoupancaList() {
+
+    return this->poupanca;
 
 }
 
@@ -223,6 +251,7 @@ void Banco::setClientList(){
 //TODO: IMPLEMENTAR METODOS CORRETAMENTE PARA OS DOIS TIPOS DE CONTA
 void Banco::setCorrenteList(){
 
+<<<<<<< HEAD
     FileIO a;
     string aux;
     int count = 0;
@@ -239,20 +268,37 @@ void Banco::setCorrenteList(){
 }
 
 void Banco::setPoupancaList(){
+=======
+void Banco::setContaList(char tipoDeConta){
+>>>>>>> remotes/origin/Bia
 
     FileIO a;
     string aux;
     int count = 0;
 
-    aux = "./Bancos/" + this->nomeBanco + "/Contas " + this->nomeBanco + ".txt";
-    this->contas = a.preencheVectorConta(aux);
-    for(auto x : this->contas){
-        for(auto y : this->clientes){
-            if(this->contas[count].getCliente().getCPF_CNPJ() == y.getCPF_CNPJ()) {
-                this->contas[count].setCliente(y);
+    if (tipoDeConta == 'c'){
+        aux = "./Bancos/Inter/ContaCorrente " + this->nomeBanco + ".txt";
+        //this->contaCorrente = a.preencheVectorConta(aux);
+        for(auto x : this->contas){
+            for(auto y : this->clientes){
+                if(this->contas[count].getCliente().getCPF_CNPJ() == y.getCPF_CNPJ()) {
+                    this->contas[count].setCliente(y);
+                }
             }
         }
     }
+    else{
+        aux = "./Bancos/" + this->nomeBanco + "/Poupanca " + this->nomeBanco + ".txt";
+        this->contas = a.preencheVectorConta(aux);
+        for(auto x : this->contas){
+            for(auto y : this->clientes){
+                if(this->contas[count].getCliente().getCPF_CNPJ() == y.getCPF_CNPJ()) {
+                    this->contas[count].setCliente(y);
+                }
+            }
+        }
+    }
+
 }
 
 void Banco::salvar(){
@@ -260,7 +306,7 @@ void Banco::salvar(){
     FileIO a;
     string aux = "./Bancos/" + this->nomeBanco + "/Contas " + this->nomeBanco + ".txt";
 
-    a.salvarListaContas(aux,this->contas);
+    a.salvarListaContas(aux,this->contaCorrente);
     aux = "./Bancos/" + this->nomeBanco + "/Clientes " + this->nomeBanco + ".txt";
     a.salvarListaClientes(aux,this->clientes);
 }
