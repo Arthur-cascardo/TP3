@@ -20,22 +20,19 @@ class Conta {
 
         //Construtor
 
-        Conta();
-        Conta(Cliente c);
-        Conta(int numConta, double Saldo, string cpf_cnpj);
+    Conta(Cliente c);
 
         //Getters
 
-        int getNumConta();
+    int getNumConta();
         double getSaldo();
         Cliente getCliente();
         vector<Move> getMovimentacoes();
 
         //Metodos
 
-        int gerarNumConta();
-        void debitarConta(double debito, string descricao);
-        void creditarConta(double credito, string descricao);
+        virtual void debitarConta(double debito, string descricao) = 0;
+        virtual void creditarConta(double credito, string descricao) = 0;
         vector<Move> obterExtratoEntreDatas(Data di, Data df);
         vector<Move> obterExtratoaPartirDeData(Data di);
         vector<Move> obterExtratoMes();

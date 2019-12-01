@@ -12,8 +12,6 @@ void Interface::menu(Banco b){
 
     while(1){
 
-        b.setClientList();
-        //b.setContaList();
         cout << "\t\t\t  Bem Vindo ao Banco " << b.getnomeBanco() << "!\n\n";
         cout << ("\nEscolha uma Funcao\n\n");
         cout << ("  [1] - Cadastrar um novo cliente\n");
@@ -36,28 +34,32 @@ void Interface::menu(Banco b){
         cin.ignore();
 
         switch(opc){
+
+            case 0:
+                return;
+
             case 1:
-                cadastraNovoCliente(b);
+                b = cadastraNovoCliente(b);
                 break;
 
             case 2:
-                criarNovaConta(b);
+                b = criarNovaConta(b);
                 break;
 
             case 3:
-                excluiConta(b);
+                b = excluiConta(b);
                 break;
 
             case 4:
-                deposito(b);
+                b = deposito(b);
                 break;
 
             case 5:
-                saque(b);
+                b = saque(b);
                 break;
 
             case 6:
-                transferencia(b);
+                b = transferencia(b);
                 break;
 
             case 7:
@@ -84,7 +86,7 @@ void Interface::menu(Banco b){
                 listarContas(b);
                 break;
             case 13:
-                excluiCliente(b);
+                b = excluiCliente(b);
                 break;
 
             default:
@@ -94,7 +96,7 @@ void Interface::menu(Banco b){
     }
 }
 
-void Interface::cadastraNovoCliente(Banco b){
+Banco Interface::cadastraNovoCliente(Banco b){
 
     Cliente novoCliente;
     string aux;
@@ -120,14 +122,11 @@ void Interface::cadastraNovoCliente(Banco b){
     cout << "Digite o telefone: ";
     cin >> aux;
     cin.ignore();
-    try{
+    try {
         novoCliente.setFone(aux);
+    } catch (const string& erro){
+        cout << erro << endl;
     }
-    catch(const string& msg){
-        cout << msg << endl;
-    }
-
-
     aux.clear();
 
     b.addCliente(novoCliente);
@@ -135,16 +134,15 @@ void Interface::cadastraNovoCliente(Banco b){
     cout << "Cliente adicionado com sucesso" << endl;
     system("pause");
     system("cls");
+    return b;
 }
 
-void Interface::criarNovaConta(Banco b){
+Banco Interface::criarNovaConta(Banco b){
 
     string CPF;
+    double limite;
     vector<Cliente> clientes;
     int i = 1;
-    ContaCorrente a(234.5);
-    cout << a.numConta;
-
 
     clientes = b.getClientList();
     cout << "Selecione Um cliente da lista: " << endl;
@@ -171,33 +169,38 @@ void Interface::criarNovaConta(Banco b){
 
     switch(opc){
         case(1):
-            cout << "qual o limite de credito desejado? " << endl;
-            double limite;
+            cout << "Qual o limite de credito desejado? " << endl;
             cin >> limite;
-            b.addConta(clientes[i-1], 'c', limite);
+            b.addConta(clientes[i - 1], 'C', limite);
+            break;
         case(2):
-            b.addConta(clientes[i - 1], 'd');
+            b.addConta(clientes[i - 1], 'P');
+            break;
+        default:
+            return b;
     }
-
-
-
-
 
     cout << "Conta criada com sucesso!" << endl;
     cout << "Bem Vindo(a) ao banco " << b.getnomeBanco() << " " << clientes[i - 1].getNome() << "!!!" << endl;
-
+    return b;
 }
 
-void Interface::excluiCliente(Banco b) {
+Banco Interface::excluiCliente(Banco b) {
 
     string CPF, s;
-    vector<Conta> contas;
+    vector<ContaCorrente> contasCorrente;
+    vector<Poupanca> poupancas;
 
     cout << "Digite o CPF do cliente a ser excluido: ";
     cin >> CPF;
     cin.ignore();
 
-    for (auto x : contas) {
+    for (auto x : contasCorrente) {
+        if (x.getCliente().getCPF_CNPJ() == CPF) {
+            s = x.getCliente().getNome();
+        }
+    }
+    for (auto x : poupancas) {
         if (x.getCliente().getCPF_CNPJ() == CPF) {
             s = x.getCliente().getNome();
         }
@@ -210,10 +213,10 @@ void Interface::excluiCliente(Banco b) {
     catch(const string& msg){
         cout << msg << endl;
     }
-
+    return b;
 }
 
-void Interface::excluiConta(Banco b){
+Banco Interface::excluiConta(Banco b){
 
     int numConta;
 
@@ -222,29 +225,28 @@ void Interface::excluiConta(Banco b){
     cin.ignore();
     cout << "A conta escolhida foi: " << numConta << endl;
     b.removeConta(numConta);
-    b.salvar();
-
+    return b;
 }
 
-void Interface::deposito(Banco b){
+Banco Interface::deposito(Banco b){
 
     float valDeposito;
     int numConta;
 
 
-        cout << "Escolha o valor de deposito: " ;
-        cin >> valDeposito;
-        cin.ignore();
-        cout << "Digite o numero da conta que recebera o deposito: ";
-        cin >> numConta;
-        cin.ignore();
-        cout << "Deposito de " << valDeposito << " reais, na conta: " << numConta << endl;
-        b.deposito(numConta, valDeposito);
-        b.salvar();
+    cout << "Escolha o valor de deposito: " ;
+    cin >> valDeposito;
+    cin.ignore();
+    cout << "Digite o numero da conta que recebera o deposito: ";
+    cin >> numConta;
+    cin.ignore();
+    cout << "Deposito de " << valDeposito << " reais, na conta: " << numConta << endl;
+    b.deposito(numConta, valDeposito);
+    return b;
 
 }
 
-void Interface::saque(Banco b){
+Banco Interface::saque(Banco b){
 
     float valSaque;
     int numConta;
@@ -264,12 +266,11 @@ void Interface::saque(Banco b){
     catch (const string& erro){
         cout << erro << endl;
     }
-
-    b.salvar();
+    return b;
 
 }
 
-void Interface::transferencia(Banco b){
+Banco Interface::transferencia(Banco b){
 
     int numContaO;
     int numContaD;
@@ -286,8 +287,7 @@ void Interface::transferencia(Banco b){
     cin.ignore();
     cout << "Transferencia no valor de " << valTransf << " reais " << " da conta " << numContaO << " para conta " << numContaD <<endl;
     b.transferencia(numContaO, numContaD, valTransf);
-    b.salvar();
-
+    return b;
 }
 
 void Interface::obterSaldo(Banco b){
@@ -305,7 +305,8 @@ void Interface::obterExtrato(Banco b){
     bool achouConta = false;
     int numConta;
     int opcExt;
-    vector<Conta> auxConta;
+    vector<ContaCorrente> auxContaCorrente = b.getContaCorrenteList();
+    vector<Poupanca> auxPoupanca = b.getPoupancaList();
     bool valido = false;
     Data di, df, dataCheck(0,0,0);
     string data, datai, dataf;
@@ -325,11 +326,18 @@ void Interface::obterExtrato(Banco b){
         cout << "Digite o numero da conta: ";
         cin >> numConta;
         cin.ignore();
-        auxConta = b.getContasList();
-        for(auto x : auxConta){
+        for(auto x : auxContaCorrente){
             if (x.getNumConta() == numConta){
                 achouConta = true;
                 break;
+            }
+        }
+        if(!achouConta){
+            for(auto x : auxPoupanca){
+                if (x.getNumConta() == numConta){
+                    achouConta = true;
+                    break;
+                }
             }
         }
         if(achouConta){break;}
@@ -342,8 +350,6 @@ void Interface::obterExtrato(Banco b){
         case 1:
 
             cout << "Extrato:" << endl;
-            //TODO: transformar em metodo void imprimeExtrato(vector<Move> move);
-            //
             for(auto x : b.extratomes(numConta)){
 
                 switch(x.getDC()){
@@ -416,8 +422,6 @@ void Interface::obterExtrato(Banco b){
                 }
             }
 
-            //TODO: transformar em metodo void imprimeExtrato(vector<Move> move);
-            //
             for(auto x : b.extratoapartirdata(numConta, di)){
 
                 switch(x.getDC()){
@@ -456,11 +460,21 @@ void Interface::listarClientes(Banco b){
 void Interface::listarContas(Banco b){
 
     cout << "---------------LISTA DE CONTAS-------------" << endl;
-    for (auto x : b.getContasList()) {
+    for (auto x : b.getContaCorrenteList()) {
         cout << "------------------------------------------- " << endl;
         cout << "Numero da conta:.. " << x.getNumConta() << endl;
         cout << "CPF ou CNPJ:...... " << x.getCliente().getCPF_CNPJ() << endl;
         cout << "------------------------------------------- " << endl;
     }
+    for (auto x : b.getPoupancaList()) {
+        cout << "------------------------------------------- " << endl;
+        cout << "Numero da conta:.. " << x.getNumConta() << endl;
+        cout << "CPF ou CNPJ:...... " << x.getCliente().getCPF_CNPJ() << endl;
+        cout << "------------------------------------------- " << endl;
+    }
+
 }
 
+void Interface::erroValorDigitado(){
+    cout << "Valor digitado invalido";
+}

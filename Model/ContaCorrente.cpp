@@ -3,36 +3,40 @@
 //
 
 #include "ContaCorrente.h"
-#include <iostream>
-#include <cstdlib>
-#include <vector>
-#include "../Controller/FileIO.h"
-#include <ctime>
 #include "Cliente.h"
-#include "Move.h"
-#include "Data.h"
 
-ContaCorrente::ContaCorrente(double limiteCredito){
+ContaCorrente::ContaCorrente(Cliente c, double limiteCredito) : Conta(c) {
     this->numConta = numConta;
     this->cliente = cliente;
     this->saldo = saldo;
     this->limiteCredito = limiteCredito;
 }
 
-/*
 void ContaCorrente::debitarConta(double debito, string descricao){
 
     Data d;
-    FileIO a;
     string aux;
-    aux = "./Bancos/Inter/Movimentacoes " + this->cliente.getCPF_CNPJ() + ".txt";
 
-    if(debito > this->saldo){return;}
+    if(debito > this->saldo + this->limiteCredito){
+        throw string ("Saldo Insuficiente");
+    } else{
+
+        d.getDataSistema();
+        Move m(d, descricao, 'D', debito);
+        this->movimentacoes.push_back(m);
+        this->saldo -= debito;
+    }
+
+
+}
+
+void ContaCorrente::creditarConta(double credito, string descricao){
+
+    Data d;
+    string aux;
 
     d.getDataSistema();
-    Move m(d, descricao, 'D', debito);
+    Move m(d, descricao, 'C', credito);
     this->movimentacoes.push_back(m);
-    this->saldo -= debito;
-    a.salvarListaMove(aux,this->movimentacoes);
+    this->saldo += credito;
 }
-*/

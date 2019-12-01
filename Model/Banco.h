@@ -10,7 +10,6 @@
 #include <list>
 #include "Cliente.h"
 #include "Conta.h"
-#include "../Controller/FileIO.h"
 #include "ContaCorrente.h"
 #include "Poupanca.h"
 
@@ -20,7 +19,6 @@ private:
 
     string nomeBanco;
     vector<Cliente> clientes;
-    vector<Conta> contas;
     vector<ContaCorrente> contaCorrente;
     vector<Poupanca> poupanca;
     vector<Move> movimentacoes;
@@ -41,22 +39,19 @@ public:
     vector<Move> extratomes(int numConta);
     vector<Move> extratoentredatas(int numConta, Data di, Data df);
     vector<Move> extratoapartirdata(int numConta, Data di);
-    void salvar();
 
     //Getters
 
     string getnomeBanco();
     vector<Cliente> getClientList();
-    vector<Conta> getContasList();
     vector<ContaCorrente> getContaCorrenteList();
     vector<Poupanca> getPoupancaList();
 
     //Setters
 
-    void setClientList();
-    void setContaList(char tipoDeConta);
 
     ~Banco();
+
 };
 
 

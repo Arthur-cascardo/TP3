@@ -8,6 +8,23 @@
 
 class SaldoDiaBase {
 
+private:
+    double saldoDiaBase;
+public:
+    double getSaldoDiaBase() const;
+
+    void setSaldoDiaBase(double saldoDiaBase);
+
+    int getDiaBase() const;
+
+    void setDiaBase(int diaBase);
+
+    SaldoDiaBase(int diaBase);
+
+private:
+    int diaBase;
+public:
+
 };
 
 

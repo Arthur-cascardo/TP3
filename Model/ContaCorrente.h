@@ -9,9 +9,15 @@
 
 class ContaCorrente : public Conta{
 public:
-    ContaCorrente(double limiteCredito);
 
+    ContaCorrente(Cliente c, double limiteCredito);
+
+    void debitarConta(double debito, string descricao) override;
+
+    void creditarConta(double credito, string descricao) override;
 private:
+
+
     double limiteCredito;
 };
 

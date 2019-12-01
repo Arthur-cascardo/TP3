@@ -13,7 +13,6 @@
 #include "../Model/Conta.h"
 #include "../Model/ContaCorrente.h"
 #include "../Model/Poupanca.h"
-#include "../Controller/FileIO.h"
 
 
 class Interface {
@@ -24,13 +23,13 @@ class Interface {
 
         Interface();
         void menu(Banco b);
-        void cadastraNovoCliente(Banco b);
-        void criarNovaConta(Banco b);
-        void excluiCliente(Banco b);
-        void excluiConta(Banco b);
-        void deposito(Banco b);
-        void saque(Banco b);
-        void transferencia(Banco b);
+        Banco cadastraNovoCliente(Banco b);
+        Banco criarNovaConta(Banco b);
+        Banco excluiCliente(Banco b);
+        Banco excluiConta(Banco b);
+        Banco deposito(Banco b);
+        Banco saque(Banco b);
+        Banco transferencia(Banco b);
         void obterSaldo(Banco b);
         void cobrarTarifa();
         void cobrarCPMF();
@@ -39,6 +38,7 @@ class Interface {
         void listarContas(Banco b);
         ~Interface();
 
+    void erroValorDigitado();
 };
 
 
